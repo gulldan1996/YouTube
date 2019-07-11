@@ -1,47 +1,63 @@
-import { CHOOSE_EN, CHOOSE_RU, DESELECT } from './action';
+import {
+  LANG_CHANGED,
+  SEARCH_STORAGE,
+  CHANGED_LANG_STATE,
+  HANDLE_CHANGE,
+  HANDLE_SUBMIT
+} from "./action";
 
 const initialState = {
-  lang: 'en',
-  choose: null,
+  lang: null,
+  videos: null,
+  term: "Default text",
+  selectVideo: null,
   en: {
-    chooseLang: 'Please choose language',
+    chooseLang: "Change language",
     button: {
-      en: 'English',
-      rus: 'Russian'
+      en: "English",
+      ru: "Russian"
     },
-    search: {
-      placeholder: 'Search on YouTube.',
-    }
+    placeholderSearch: "Search video"
   },
   ru: {
-    chooseLang: 'Пожалуйста выбирите язык',
+    chooseLang: "Изменить язык",
     button: {
-      en: 'Английский',
-      rus: 'Русский'
+      en: "Английский",
+      ru: "Русский"
     },
-    search: {
-      placeholder: 'Искать видео на YouTube'
-    }
+    placeholderSearch: "Искать видео"
   }
 };
 
 export function getNextState(state = initialState, action) {
   switch (action.type) {
-    case CHOOSE_EN:
+    case LANG_CHANGED:
+      let returned_state_string = localStorage.getItem("my_saved_state");
+      let returned_state_object = JSON.parse(returned_state_string);
       return {
         ...state,
-        choose: false
+        lang: returned_state_object.lang
       };
-    case CHOOSE_RU:
+    case SEARCH_STORAGE:
       return {
         ...state,
-        choose: true
+        lang: action.storage
       };
-    case DESELECT:
+    case CHANGED_LANG_STATE:
       return {
         ...state,
-        choose: null
-      }
+        lang: null
+      };
+    case HANDLE_SUBMIT:
+      return {
+        ...state,
+        videos: action.payload.data.items
+      };
+    case HANDLE_CHANGE:
+      return {
+        ...state,
+        term: action.target
+      };
     default:
       return state;
   }

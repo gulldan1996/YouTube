@@ -1,17 +1,20 @@
 import { connect } from 'react-redux';
-import { chooseEn, chooseRu, deselect } from "../redux/action";
+import { langChanged, searchStorage, changedLangState } from "../redux/action";
 import ChooseLanguage from './ChooseLanguage';
 
 function mapStateToProps(state) {
   return {
+    lang: state.lang,
+    en: state.en,
+    ru: state.ru
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    chooseEn: () => dispatch(chooseEn()),
-    chooseRus: () => dispatch(chooseRu()),
-    deselect: () => dispatch(deselect())
+    langChanged: (lang) => dispatch(langChanged(lang)),
+    searchStorage: (storage) => dispatch(searchStorage(storage)),
+    changedLangState: () => dispatch(changedLangState())
   };
 }
 

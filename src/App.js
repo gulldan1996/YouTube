@@ -10,9 +10,11 @@ const store = createStore(getNextState, applyMiddleware(thunk));
 
 function App() {
   return (
-    <Provider store={store}>
-      <ChooseLanguageHandler />
-    </Provider>
+    <div>
+      <Provider store={store}>
+        <ChooseLanguageHandler />
+      </Provider>
+    </div>
   );
 }
 
